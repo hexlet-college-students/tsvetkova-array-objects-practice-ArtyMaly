@@ -12,13 +12,12 @@ const normalizeData = (content) => {
 const getRatings = (data) => {
   const ratingsGP = data.map((item) => Number(item[2]));
   const ratingsAS = data.map((item) => Number(item[3]));
-  // самый высокий средний рейтинг в Google Play
+
   const ratingGP = Math.max(...data.map((item) => Number(item[2])));
-  // самый высокий средний рейтинг в App Store
+
   const ratingAppStore = Math.max(...data.map((item) => Number(item[3])));
-  // название приложения
+
   const topMes = data[ratingsGP.indexOf(ratingGP)][0];
-  // название компании-разработчика
   const owner = data[ratingsAS.indexOf(ratingAppStore)][1];
   return [topMes, owner];
 };
@@ -41,7 +40,6 @@ const getPopAust = (data) => {
 };
 
 const numberOfDownload = (data) => {
-  // Среднее количество скачиваний
   const averNumberOfDl = data.reduce((acc, item) => {
     const count = (Number(item[4]) + Number(item[5]) + Number(item[6]) + Number(item[7])) / 4;
     acc.push(count);
@@ -79,23 +77,23 @@ const topOwner = (data) => {
 const tableParsing = (content) => {
   const data = normalizeData(content);
 
-  // task 1 step 1
+  // step 1
   const [topMes, owner] = getRatings(data);
   console.log(`General top messenger: ${topMes}, Owner: ${owner}`);
 
-  // task 1 step 2
+  // step 2
   const [maxDlIndia, minDlIndia] = getDlIndia(data);
   console.log(`Download count: Max count: ${maxDlIndia}, Min count: ${minDlIndia}`);
 
-  // task 1 step 3
+  // step 3
   const [top1, top2, top3] = getPopAust(data);
   console.log(`Top-3 Australia: ${top1}, ${top2}, ${top3}`);
 
-  // task 1 step 4
+  // step 4
   const names = numberOfDownload(data);
   console.log(`Top downloads: ${names}`);
 
-  // task 1 step 5
+  // step 5
   const owners = topOwner(data);
   console.log(`Top owner: ${owners}`);
 };
